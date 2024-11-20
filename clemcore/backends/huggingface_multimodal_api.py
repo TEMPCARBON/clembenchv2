@@ -308,6 +308,11 @@ class HuggingfaceMultimodalModel(backends.Model):
                                                 tokens_used=context_check[1], tokens_left=context_check[2],
                                                 context_size=context_check[3])
 
+        prompt = {"inputs": prompt_text, "max_new_tokens": self.get_max_tokens(), "temperature": self.get_temperature()}
+
+        logger.info("*" * 50)
+        logger.info(f"\n\n PROMPT : {prompt} \n\n")
+        logger.info("*" * 50)
         
         response_method = import_method(self.response_method)
         response_kwargs = {
@@ -321,7 +326,7 @@ class HuggingfaceMultimodalModel(backends.Model):
         }
         generated_response = response_method(**response_kwargs)
 
-        prompt = {"inputs": prompt_text, "max_new_tokens": self.get_max_tokens(), "temperature": self.get_temperature()}
+        
 
         # Store generated text
         response = {"response": generated_response}
@@ -334,10 +339,6 @@ class HuggingfaceMultimodalModel(backends.Model):
             rt_split = response_text.split(self.cull)  # Cull from End of String token
             response_text = rt_split[0]
         response_text = response_text.strip()
-
-        logger.info("*" * 50)
-        logger.info(f"\n\n RESPONSE : {response} \n\n")
-        logger.info("*" * 50)
 
         logger.info("*" * 50)
         logger.info(f"\n\n RESPONSETEXT : {response_text} \n\n")
