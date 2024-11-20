@@ -3,17 +3,17 @@ Backend using HuggingFace transformers for open-weight multimodal models.
 """
 from typing import List, Dict, Tuple, Any
 import torch
-import backends
+import clemcore.backends as backends
 from PIL import Image
 import requests
 from transformers import AutoTokenizer, AutoConfig
 from jinja2 import Template
 import warnings
 import importlib
-
+import logging
 FALLBACK_CONTEXT_SIZE = 256
 
-logger = backends.get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 def get_context_limit(model_spec: backends.ModelSpec) -> int:
     """
