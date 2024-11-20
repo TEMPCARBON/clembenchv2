@@ -12,6 +12,9 @@ from torchvision.transforms.functional import InterpolationMode
 from transformers.image_utils import load_image
 import requests
 from io import BytesIO
+import logging
+
+logger = logging.getLogger(__name__)
 
 """
 ##### INTERNVL2 TYPE MODELS #####
@@ -287,6 +290,19 @@ def generate_internvl2_response(**response_kwargs) -> str:
 
     images = get_internvl2_image(messages=messages, device=device)
     history, question = generate_history_internvl2(messages=messages)
+
+    logger.info("*" * 50)
+    logger.info(f"\n\n PROMPT : {question} \n\n")
+    logger.info("*" * 50)
+
+    logger.info("*" * 50)
+    logger.info(f"\n\n IMAGES : {images} \n\n")
+    logger.info("*" * 50)
+
+    logger.info("*" * 50)
+    logger.info(f"\n\n HISTORY : {history} \n\n")
+    logger.info("*" * 50)
+
     if not history:
         history = None
     generation_config = dict(max_new_tokens=max_tokens, do_sample=True)
