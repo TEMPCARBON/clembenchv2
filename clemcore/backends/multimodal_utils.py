@@ -296,7 +296,7 @@ def generate_internvl2_response(**response_kwargs) -> str:
     logger.info("*" * 50)
 
     logger.info("*" * 50)
-    logger.info(f"\n\n IMAGES : {images} \n\n")
+    logger.info(f"\n\n Len IMAGES : {len(images)} \n\n")
     logger.info("*" * 50)
 
     logger.info("*" * 50)
