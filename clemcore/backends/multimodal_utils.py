@@ -295,14 +295,6 @@ def generate_internvl2_response(**response_kwargs) -> str:
     logger.info(f"\n\n PROMPT : {question} \n\n")
     logger.info("*" * 50)
 
-    logger.info("*" * 50)
-    logger.info(f"\n\n Len IMAGES : {len(images)} \n\n")
-    logger.info("*" * 50)
-
-    logger.info("*" * 50)
-    logger.info(f"\n\n HISTORY : {history} \n\n")
-    logger.info("*" * 50)
-
     if not history:
         history = None
     generation_config = dict(max_new_tokens=max_tokens, do_sample=True)
