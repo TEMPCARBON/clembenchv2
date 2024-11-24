@@ -229,28 +229,16 @@ def get_internvl2_image(messages: List[str], device: str):
     # Get last user message
     last_user_message = next((msg for msg in reversed(messages) if msg['role'] == 'user'), None)
 
-    logger.info("*" * 50)
-    logger.info(f"\n\n Last User Message : {last_user_message} \n\n")
-    logger.info("*" * 50)
-
     if last_user_message is None:
         raise ValueError("No user message found in the provided messages.")
+    
+    if 'image' in last_user_message:
+        # Load all images and concatenate them into a single tensor
+        pixel_values = torch.cat(
+            [load_internvl2_image(img, max_num=12).to(torch.bfloat16).to(device) for img in last_user_message['image']]
+        , dim=0)
     else:
-        if 'image' in last_user_message:
-            if len(last_user_message['image']) > 1:            
-                pixel_values = load_internvl2_image(last_user_message['image'][0], max_num=12).to(torch.bfloat16).to(device)
-                for i in range(1, len(last_user_message['image'])):
-                    pixel_values1 = load_internvl2_image(last_user_message['image'][i], max_num=12).to(torch.bfloat16).to(device)
-                    pixel_values = torch.cat((pixel_values, pixel_values1), dim=0)
-            else:
-                pixel_values = load_internvl2_image(last_user_message['image'][0], max_num=12).to(torch.bfloat16).to(device)
-
-        else:
-            pixel_values = None
-
-            logger.info("*" * 50)
-            logger.info(f"\n\n Pixel Values is NONE \n\n")
-            logger.info("*" * 50)
+        pixel_values = None
 
     return pixel_values
 
@@ -293,19 +281,7 @@ def generate_internvl2_response(**response_kwargs) -> str:
 
     images = get_internvl2_image(messages=messages, device=device)
     history, question = generate_history_internvl2(messages=messages)
-
-    logger.info("*" * 50)
-    logger.info(f"\n\n MESSAGES : {messages} \n\n")
-    logger.info("*" * 50)
-
-    logger.info("*" * 50)
-    logger.info(f"\n\n Images Present : {images!=None} \n\n")
-    logger.info("*" * 50)
-
-    logger.info("*" * 50)
-    logger.info(f"\n\n Question : {question} \n\n")
-    logger.info("*" * 50)
-
+    
     if not history:
         history = None
     generation_config = dict(max_new_tokens=max_tokens, do_sample=True)
