@@ -214,7 +214,7 @@ def load_internvl2_image(image_file, input_size=448, max_num=12):
 
 def get_internvl2_image(messages: List[str], device: str):
     """
-    Extracts the last user message containing image data and loads the corresponding images.
+    Extracts latest user message that contains image data and loads the corresponding images.
 
     Args:
         messages (List[str]): A list of message dictionaries containing user, system, and assistant messages.
@@ -292,7 +292,7 @@ def generate_internvl2_response(**response_kwargs) -> str:
     history, question = generate_history_internvl2(messages=messages)
 
     logger.info("*" * 50)
-    logger.info(f"\n\n MESSAGES : {messages} \n\n")
+    logger.info(f"\n\n History : {history} \n\n")
     logger.info("*" * 50)
 
     if not history:
