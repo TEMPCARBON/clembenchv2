@@ -249,6 +249,10 @@ def get_internvl2_image(messages: List[str], device: str):
         else:
             pixel_values = None
 
+            logger.info("*" * 50)
+            logger.info(f"\n\n Pixel Values is NONE \n\n")
+            logger.info("*" * 50)
+
     return pixel_values
 
 def generate_internvl2_prompt_text(messages: List[str], **prompt_kwargs) -> str:
