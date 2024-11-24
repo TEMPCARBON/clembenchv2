@@ -227,12 +227,7 @@ def get_internvl2_image(messages: List[str], device: str):
         ValueError: If no user message is found.
     """
     # Get last user message
-    last_user_message = None
-    for i in range(len(messages)):
-        index = len(messages) - i - 1
-        # Find last user message
-        if messages[index]['role'] == 'user':
-            last_user_message = messages[index]
+    last_user_message = next((msg for msg in reversed(messages) if msg['role'] == 'user'), None)
 
     logger.info("*" * 50)
     logger.info(f"\n\n Last User Message : {last_user_message} \n\n")
