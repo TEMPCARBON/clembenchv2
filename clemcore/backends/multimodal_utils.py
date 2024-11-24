@@ -295,6 +295,14 @@ def generate_internvl2_response(**response_kwargs) -> str:
     logger.info(f"\n\n MESSAGES : {messages} \n\n")
     logger.info("*" * 50)
 
+    logger.info("*" * 50)
+    logger.info(f"\n\n Images Present : {images!=None} \n\n")
+    logger.info("*" * 50)
+
+    logger.info("*" * 50)
+    logger.info(f"\n\n Question : {question} \n\n")
+    logger.info("*" * 50)
+
     if not history:
         history = None
     generation_config = dict(max_new_tokens=max_tokens, do_sample=True)
