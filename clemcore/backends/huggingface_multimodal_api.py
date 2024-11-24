@@ -324,8 +324,6 @@ class HuggingfaceMultimodalModel(backends.Model):
         }
         generated_response = response_method(**response_kwargs)
 
-        
-
         # Store generated text
         response = {"response": generated_response}
 

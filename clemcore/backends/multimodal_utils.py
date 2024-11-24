@@ -272,6 +272,9 @@ def generate_internvl2_response(**response_kwargs) -> str:
 
     Returns:
         str: The generated response from the model.
+
+    Raises:
+        RuntimeError: If the model fails to generate a response.
     """
     messages = response_kwargs['messages']
     device = response_kwargs['device']
@@ -285,8 +288,11 @@ def generate_internvl2_response(**response_kwargs) -> str:
     if not history:
         history = None
     generation_config = dict(max_new_tokens=max_tokens, do_sample=True)
-    generated_response, _ = model.chat(processor, images, question, generation_config, 
+    try:
+        generated_response, _ = model.chat(processor, images, question, generation_config, 
                                                      history=history, return_history=True)
+    except Exception as e:
+        raise RuntimeError("Failed to generate response from the model.") from e
 
     return generated_response
 
@@ -386,6 +392,9 @@ def generate_llava_response(**response_kwargs) -> str:
 
     Returns:
         str: The generated response from the LLAVA model.
+
+    Raises:
+        RuntimeError: If the model fails to generate a response.
     """
     messages = response_kwargs['messages']
     device = response_kwargs['device']
@@ -407,8 +416,11 @@ def generate_llava_response(**response_kwargs) -> str:
 
     inputs = processor(images=processed_images, text=prompt, return_tensors='pt').to(device)
 
-    output = model.generate(**inputs, max_new_tokens=max_tokens, do_sample=do_sample)
-    response = processor.decode(output[0], skip_special_tokens=True)
+    try:
+        output = model.generate(**inputs, max_new_tokens=max_tokens, do_sample=do_sample)
+        response = processor.decode(output[0], skip_special_tokens=True)
+    except Exception as e:
+        raise RuntimeError("Failed to generate response from the LLAVA model.") from e
 
     return response
 
@@ -460,6 +472,9 @@ def generate_idefics_response(**response_kwargs) -> str:
 
     Returns:
         str: The generated response from the IDEFICS model.
+
+    Raises:
+        RuntimeError: If the model fails to generate a response.
     """
     messages = response_kwargs['messages']
     device = response_kwargs['device']
@@ -494,7 +509,10 @@ def generate_idefics_response(**response_kwargs) -> str:
     exit_condition = processor.tokenizer("<end_of_utterance>", add_special_tokens=False).input_ids
     bad_words_ids = processor.tokenizer(["<image>", "<fake_token_around_image>"], add_special_tokens=False).input_ids
 
-    generated_ids = model.generate(**inputs, eos_token_id=exit_condition, bad_words_ids=bad_words_ids, max_length=max_tokens)
-    generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)
+    try:
+        generated_ids = model.generate(**inputs, eos_token_id=exit_condition, bad_words_ids=bad_words_ids, max_length=max_tokens)
+        generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)
+    except Exception as e:
+        raise RuntimeError("Failed to generate response from the IDEFICS model.") from e
     
     return generated_text[0]
