@@ -292,7 +292,7 @@ def generate_internvl2_response(**response_kwargs) -> str:
     history, question = generate_history_internvl2(messages=messages)
 
     logger.info("*" * 50)
-    logger.info(f"\n\n PROMPT : {question} \n\n")
+    logger.info(f"\n\n MESSAGES : {messages} \n\n")
     logger.info("*" * 50)
 
     if not history:
