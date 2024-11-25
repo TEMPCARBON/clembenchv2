@@ -281,13 +281,14 @@ def generate_internvl2_response(**response_kwargs) -> str:
     max_tokens = response_kwargs['max_tokens']
     model = response_kwargs['model']
     processor = response_kwargs['processor']
+    do_sample = response_kwargs['do_sample']
 
     images = get_internvl2_image(messages=messages, device=device)
     history, question = generate_history_internvl2(messages=messages)
     
     if not history:
         history = None
-    generation_config = dict(max_new_tokens=max_tokens, do_sample=True)
+    generation_config = dict(max_new_tokens=max_tokens, do_sample=do_sample)
     try:
         generated_response, _ = model.chat(processor, images, question, generation_config, 
                                                      history=history, return_history=True)
