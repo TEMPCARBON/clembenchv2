@@ -128,5 +128,35 @@
     "image": "single",
     "languages": ["en"],
     "benchmark": ["1.6", "1.6.5", "2.0"]
+  },
+  {
+    "game_name": "textmapworld",
+    "game_path": "../clemgames/textmapworld",
+    "description": "In this game an agent is placed on a graph and needs to navigate through it by reasoning about past steps taken",
+    "main_game": "textmapworld",
+    "players": "two",
+    "image": "none",
+    "languages": ["en"],
+    "benchmark": ["1.6", "1.6.5", "2.0"]
+  },
+  {
+    "game_name": "textmapworld_graphreasoning",
+    "game_path": "../clemgames/textmapworld_graphreasoning",
+    "description": "In this game an agent is placed on a graph and needs to navigate through it by reasoning about past steps taken",
+    "main_game": "textmapworld",
+    "players": "two",
+    "image": "none",
+    "languages": ["en"],
+    "benchmark": ["1.6", "1.6.5", "2.0"]
+  },
+  {
+    "game_name": "textmapworld_specificroom",
+    "game_path": "../clemgames/textmapworld_specificroom",
+    "description": "In this game an agent is placed on a graph and needs to navigate through it by reasoning about past steps taken",
+    "main_game": "textmapworld",
+    "players": "two",
+    "image": "none",
+    "languages": ["en"],
+    "benchmark": ["1.6", "1.6.5", "2.0"]
   }
 ]
