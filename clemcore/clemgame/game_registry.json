@@ -131,7 +131,7 @@
   },
   {
     "game_name": "textmapworld_main",
-    "game_path": "../clemgames/textmapworld/textmapworld",
+    "game_path": "../clemgames/textmapworld/textmapworld_main",
     "description": "In this game an agent is placed on a graph and needs to navigate through it by reasoning about past steps taken",
     "main_game": "textmapworld",
     "players": "two",
